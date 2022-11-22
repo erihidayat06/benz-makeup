@@ -10,7 +10,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Analisa transaksi : {{ date('l, d M Y') }}</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Analisa transaksi : {{ date('l, d M Y -') }} <span id="jam"></span></h6>
     </div>
     <div class="card-body">
         <?php $i= 0 ?>
@@ -57,5 +57,25 @@
 
 </div>
 
+<script type="text/javascript">
+    window.onload = function() { jam(); }
+   
+    function jam() {
+     var e = document.getElementById('jam'),
+     d = new Date(), h, m, s;
+     h = d.getHours();
+     m = set(d.getMinutes());
+     s = set(d.getSeconds());
+   
+     e.innerHTML = h +':'+ m +':'+ s;
+   
+     setTimeout('jam()', 1000);
+    }
+   
+    function set(e) {
+     e = e < 10 ? '0'+ e : e;
+     return e;
+    }
+</script>
 
 @endsection

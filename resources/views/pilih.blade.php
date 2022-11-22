@@ -3,12 +3,14 @@
 @section('container')
 
 @include('sweetalert::alert')
-<div class="container">
+<div style="margin-top:65px" class="container">
 
 {{-- Tampilan Pilih --}}
 <div style="border-radius:5px" class="row g-0 bg-light position-relative mt-2 shadow-sm">
   <div style="max-height:505px; overflow: hidden; " class="col-md-5 mb-md-0 p-md-4">
-    <img  src="{{ asset('storage/' . $pilih->gambar) }}" width="100%" alt="...">
+    <span type="button" data-bs-toggle="modal" data-bs-target="#pilih">
+       <img  src="{{ asset('storage/' . $pilih->gambar) }}" width="100%" alt="...">
+    </span> 
   </div>
   <div class="col-md-6 p-4 ps-md-0">
     <h1 class="mt-0 fw-bold">{{ $pilih->jns_makeup }}</h1>
@@ -23,12 +25,13 @@
 {{-- akhir Tampilan Pilih --}}
     
 @auth
-<!-- Button trigger modal -->
+<!-- Button trigger modal Pesan sekarang -->
 <button style="padding: 0; width:100%; padding-top:3px" type="button" class="btn btn-primary d-inline mt-5 mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
   <h3>Pesan Sekarang</h3> 
 </button>
 @else
-<a style="padding: 0 200px; padding-top:3px" href="/login" class="btn btn-primary mt-5 mb-5"><h3>Pesan Sekarang</h3> </a>
+<a style="padding: 0; width:100%; padding-top:3px" href="/login" class="btn btn-primary mt-5 mb-5">
+  <h3>Pesan Sekarang</h3> </a>
 @endauth
   </div>
 </div>
@@ -104,5 +107,22 @@
   </div>
 </div>
 {{-- Akhir Deskripsi --}}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="pilih" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog d-flex align-items-center">
+    <div  class="modal-content">
+      <div class="modal-body p-0">
+        <div class="gambar d-flex justify-content-center">
+        <img width="75%" height="100%" src="{{ asset('storage/' . $pilih->gambar) }}" alt="">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 
 @endsection

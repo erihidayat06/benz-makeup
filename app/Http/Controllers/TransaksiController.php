@@ -56,12 +56,10 @@ class TransaksiController extends Controller
             "no_telp" => "required|max:255",
             "alamat" => "required|max:255",
             "no_pesanan" => "unique:transaksis",
-            "uniq_user" => "unique:transaksis"
         ]);
          
 
         $validateData['user_id'] = auth()->user()->id;
-        $validateData['uniq_user'] = auth()->user()->uniq;
         $validateData['no_pesanan'] = substr(auth()->user()->name, 0, 2) . rand(0,9999) . substr(md5(time()), 0, 4) . substr($request->no_telp, -4);
 
 

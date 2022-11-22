@@ -52,7 +52,7 @@
       <script src="/js/dashboard.js"></script>
 
     <script>
-         const jns_makeup = document.querySelector('#jns_makeup');
+    const jns_makeup = document.querySelector('#jns_makeup');
     const slug = document.querySelector('#slug');
 
     jns_makeup.addEventListener('keyup', function(){

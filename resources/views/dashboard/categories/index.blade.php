@@ -25,7 +25,7 @@
       @foreach ($categories as $category)
         
       <tr>
-        <td><?=$i++?></td>
+        <th scope="row"><?=$i++?></td>
         <td>{{ $category->nama }}</td>
         <td><img class="img-thumbnail" src="{{ asset('storage/' . $category->gambar) }}" width="100" alt=""></td>
         <td>

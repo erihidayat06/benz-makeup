@@ -6,18 +6,19 @@
 
 
 
-<div class="container">
-<div style="margin-bottom: 300px" class="table-responsive col-lg-10 mt-3">
+<div style="margin-top:70px" class="container">
+<div style="margin-bottom: 300px;" class="table-responsive col-lg-11 mt-3">
 <legend>Table Pesanan - {{ auth()->user()->name }}</legend>
 <p class="alert alert-primary">Jika Status <span class="text-danger fw-bold"> Tunggu </span>Segera Lakukan Pemabayaran Dengan Mengklik Tombol <span class="fw-bold">Bayar</span> </p>
 <table class="table table-bordered bg-light">
     <thead>
       <tr class="bg-primary text-light">
         <th>No</th>
-        <th>Jenis Makeup</th>
-        <th>Tanggal Acara</th>
+        <th>Jenis_Makeup</th>
+        <th>Tanggal_Acara</th>
         <th>Alamat</th>
         <th>Harga</th>
+        <th>Tanggal_Pemesanan</th>
         <th>Status</th>
         <th>Pembayaran</th>
 
@@ -28,10 +29,11 @@
     @foreach ($pesanan as $pesan)
       <tr>
         <th>{{ $i++ }}</th>    
-        <td>{{ $pesan->pilihan->jns_makeup }}</td>
+        <td><a href="/pilih/{{ $pesan->pilihan->slug }}">{{ $pesan->pilihan->jns_makeup }}</a></td>
         <td>{{ date('d M Y', strtotime( $pesan->tgl_acara)) }}</td>
         <td>{{ $pesan->alamat }}</td>
-        <td>Rp {{ number_format($pesan->pilihan->harga,0,",",".")  }}</td>
+        <td>Rp{{ number_format($pesan->pilihan->harga,0,",",".")  }}</td>
+        <td>{{ date('d M Y', strtotime( $pesan->created_at)) }}</td>
         <td>
             @if ($pesan->acc_pesanan == true)
               <p style="color: green; font-weight: bold">sukses</p>
@@ -52,5 +54,6 @@
   </table>
 </div>
 </div>
+
 
 @endsection

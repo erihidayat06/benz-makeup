@@ -41,6 +41,7 @@
     </div>
 </div>
 
+{{-- copy --}}
 <div class="copy">
 &copy; 2022 Benz Makeup All rights reserved
 </div>

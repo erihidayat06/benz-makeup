@@ -3,9 +3,9 @@
 @section('container')
 
 {{-- jumbotron --}}
-<div class="jumbotron">
-  <div class="img">
-    <img width="400px" src="https://s3-alpha-sig.figma.com/img/3865/9eea/6d33d9ec618995c486b796d4668fd8a5?Expires=1669593600&Signature=G0FcSzGMg9c6LEyVqKCpt44ngcxBCUqj66UKe~82tCvVp-e3h8gPcfHIgdQeLZjN9c7yo0wVjVu9qiLuqW1j2UMXvKyNZde10kKdWZQRnWs58L8Ace-NTuhm~fRdbbljSpBBsfqM4lqFnYzDQwdUQiFO3tIisCKhqYXehYKPOcEBLKyQ430-eAYSMThULppa421IsvofRo0gmTehL3XVC2opU-X8QKU1bTxSY11lyWla2ExvGki5tudwseqyC6iQJZFzbSM3TgXVkz9mvhi7NySrTExUUBHczhYRW7R3pxldOG7Lske51mRH3EyxhakiPY3dkPiAYXUPy9ms2IbHsQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="">
+<div style="margin-top:50px;" class="jumbotron">
+  <div class="img ">
+    <img class="justify-content-center" style="margin-top: 100px" width="250px" src="/img/logo.png" alt="">
   </div>
   
 </div>
@@ -35,5 +35,6 @@
 </div>  
 </div>
 {{-- akhir category --}}
+
 @endsection
 

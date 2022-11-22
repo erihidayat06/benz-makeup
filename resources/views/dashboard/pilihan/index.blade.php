@@ -18,7 +18,7 @@
       @if (request('category'))
           <input type="hidden" name="category" value="{{ request('category') }}">
       @endif
-      <input type="text" class="form-control" name="cari" placeholder="Cari Transaksi" value="{{ request('cari') }}">
+      <input type="text" class="form-control" name="cari" placeholder="Cari Makeup..." value="{{ request('cari') }}">
       <button class="btn btn-primary"  type="submit" id="button-addon2">Cari</button>
     </div>
     </form>
@@ -45,7 +45,7 @@
 
 
 <div class="mt-3" style="margin-left: 50%">{{ $pilihans->links() }}</div>
-<div class="table-responsive col-lg-8 mt-3">
+<div class="table-responsive col-lg-10 mt-3">
   <table class="table table-striped text-start table-bordered table-sm">
     <thead>  
       <tr>
@@ -62,7 +62,7 @@
       @foreach ($pilihans as $pilih)
         
       <tr>
-        <td><?=$i++?></td>
+        <th scope="row"><?=$i++?></td>
         <td>{{ $pilih->jns_makeup }}</td>
         <td>{{ $pilih->harga }}</td>
         <td>{{ $pilih->category->nama }}</td>

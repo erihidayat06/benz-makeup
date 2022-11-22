@@ -22,7 +22,7 @@ class PilihanController extends Controller
         }
         $this->authorize('admin');
         return view('dashboard.pilihan.index',[
-            'pilihans' => Pilihan::filter(request(['category','cari']))->paginate(10)->withQueryString(),
+            'pilihans' => Pilihan::latest()->filter(request(['category','cari']))->paginate(10)->withQueryString(),
             'judul' => $judul,
             'categories' => Category::all()
         ]);

@@ -1,5 +1,5 @@
 {{-- Awal Navbar --}}
-<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" id="navbar">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark shadow-sm" id="navbar">
   <div class="container">
     <a class="navbar-brand" href="/">Benz Makeup</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
                 <?php $i++ ?>
               @endforeach
             <li>
-              <a class="dropdown-item position-relative" href="/pesanan?uniq_user={{ auth()->user()->uniq }}">
+              <a class="dropdown-item position-relative" href="/pesanan">
               <i class="bi bi-cart2"></i>
                 Pesanan 
               @if ($i<=0)
