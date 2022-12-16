@@ -11,6 +11,8 @@ use App\Http\Controllers\PilihanController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\HomePilihanController;
+use App\Http\Controllers\KomentarController;
+use App\Models\Komentar;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function (){
-    return view('dashboard.index');
+    return view('dashboard.index',[
+        'judul' => 'Admin'
+    ]);
 })->middleware('admin');
 
 
@@ -46,6 +50,7 @@ Route::get('/pilih/{pilihan:slug}', [HomePilihanController::class,'show']);
 Route::resource('/dashboard/pilihan', PilihanController::class)->middleware('auth');
 Route::resource('/dashboard/transaksi', TransaksiController::class);
 Route::post('/transaksi', [TransaksiController::class, 'create']);
+Route::delete('/transaksi/{transaksi:id}', [TransaksiController::class, 'destroy']);
 
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
@@ -55,8 +60,10 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/pesanan', [PesananController::class,'index'])->middleware('auth');
-Route::get('/pesanan/{transaksi:user_id}', [PesananController::class,'show'])->middleware('auth');
+Route::get('/pesanan/{transaksi:no_pesanan}', [TransaksiController::class,'show'])->middleware('auth');
 
-Route::resource('dashboard/category', CategoryController::class);
+Route::resource('dashboard/category', CategoryController::class)->middleware('auth');
 
 Route::get('/dashboard/analis', [AnalisController::class, 'index'])->middleware('auth');
+
+Route::post('/komentar', [KomentarController::class, 'create'])->middleware('auth');

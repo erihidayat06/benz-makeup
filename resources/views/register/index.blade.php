@@ -10,7 +10,7 @@
     <h1 class="h3 mb-3 fw-normal">Form Register</h1>
 
     <div class="form-floating mt-2">
-      <input type="text" class="form-control @error('name') is-invalid @enderror " id="name" name="name" value="{{ old('name') }}" placeholder="name">
+      <input type="text" class="form-control @error('name') is-invalid @enderror " id="name" name="name" value="{{ old('name') }}" placeholder="name" autofocus>
       <label for="name">Name</label>
       @error('name')
           <div class="invalid-feedback">

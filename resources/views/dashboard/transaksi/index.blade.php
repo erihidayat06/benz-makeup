@@ -26,16 +26,21 @@
         <a class="nav-link {{ ($active == 'tunggu') ? 'active' : '' }} fw-bold" aria-current="page" href="/dashboard/transaksi?acc_pesanan=false&active=aktif&cancel=false">Tunggu</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ ($active == 'sukses') ? 'active' : '' }} fw-bold" aria-current="page" href="/dashboard/transaksi?acc_pesanan=1&cancel=false">Sukses</a>
+        <a class="nav-link {{ ($active == 'sukses') ? 'active' : '' }} fw-bold" aria-current="page" href="/dashboard/transaksi?acc_pesanan=1&cancel=false&selesai=false">Sukses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ ($active == 'selesai') ? 'active' : '' }} fw-bold" aria-current="page" href="/dashboard/transaksi?selesai=1">Selesai</a>
       </li>
     </ul>
   </div>
   <div class="card-body">
 
 
-
-    
-<div class="float-end">{{ $transaksis->links() }}</div>
+<div class="float-start">
+  showing {{$transaksis->firstItem()}} to {{$transaksis->lastItem()}} of {{$transaksis->total()}} 
+</div>
+  
+<div class="float-end">{{ $transaksis->links() }}</div><br><br>
 
 <div class="table-responsive col-lg-12 mt-3  d-block">
   <table class="table table-striped text-start table-bordered table-sm">
@@ -66,24 +71,30 @@
         <td>{{ date('d M Y', strtotime($transaksi->tgl_acara)) }}</td>
         <td>{{ $transaksi->no_telp }}</td>
         <td>{!! $transaksi->alamat !!}</td>
-        <td>{{ $transaksi->no_pesanan }}</td>
+        <td class="text-uppercase">{{ $transaksi->no_pesanan }}</td>
         <td>
-          @if ($transaksi->acc_pesanan == true)
-              <p style="color: green; font-weight: bold">sukses</p>
+          @if ($transaksi->selesai == true && $transaksi->acc_pesanan == true)
+              <p style="color: rgb(12, 181, 0); font-weight: bold">Selesai</p>
+          @elseif($transaksi->acc_pesanan == true)
+              <p style="color: rgb(0, 38, 85); font-weight: bold">sukses</p>
           @else
               <p style="color:red; font-weight: bold">Tunggu</p>
           @endif
         </td>
         <td>
 
-          {{-- Tombol Acc --}}
+          @if ($transaksi->selesai == 0)
+          {{-- Opsi --}}
+          <div class="d-flex justify-content-start">
+           {{-- Tombol Acc --}}
           @if ($transaksi->acc_pesanan)
             <form action="/dashboard/transaksi/{{ $transaksi->id }}" method="post" class="d-inline">
             @method('PUT')
             @csrf   
             <input type="hidden" name="acc_pesanan" value="{{ $transaksi->acc_pesanan }}">
             <input type="hidden" name="cancel" value="-">
-            <button type="submit" class="badge btn-warning px-2 text-dark float-start">Batal</button>
+            <input type="hidden" name="selesai" value="-">
+            <button type="submit" class="badge m-1 mx-2 btn-warning px-2 text-dark">Batal</button>
             </form>
           
           @else
@@ -91,8 +102,9 @@
             @method('PUT')
             @csrf 
             <input type="hidden" name="cancel" value="-">  
+            <input type="hidden" name="selesai" value="-">
             <input type="hidden" name="acc_pesanan" value="{{ $transaksi->acc_pesanan }}">
-            <button type="submit" class="badge btn-primary px-3 float-start">Acc</button>
+            <button type="submit" class="badge m-1 btn-primary px-3">Acc</button>
             </form>
           @endif
           
@@ -103,7 +115,8 @@
             @csrf   
             <input type="hidden" name="cancel" value="{{ $transaksi->cancel }}">
              <input type="hidden" name="acc_pesanan" value="-">
-          <button type="submit" class="badge btn-success float-end">Kembalikan</button>
+             <input type="hidden" name="selesai" value="-">
+          <button type="submit" class="badge m-1 btn-success">Kembalikan</button>
           </form>
             @else
             <form action="/dashboard/transaksi/{{ $transaksi->id }}" method="post" class="d-inline">
@@ -111,16 +124,35 @@
             @csrf   
             <input type="hidden" name="cancel" value="{{ $transaksi->cancel }}">
              <input type="hidden" name="acc_pesanan" value="-">
-          <button type="submit" class="badge btn-danger float-end px-3">Cancel</button>
+             <input type="hidden" name="selesai" value="-">
+          <button type="submit" class="badge m-1 btn-danger px-3">Cancel</button>
+          </form>
+
+            @if($transaksi->acc_pesanan == true)
+            <form action="/dashboard/transaksi/{{ $transaksi->id }}" method="post" class="d-inline">
+            @method('PUT')
+            @csrf   
+            <input type="hidden" name="sukses" value="{{ $transaksi->sukses }}">
+             <input type="hidden" name="acc_pesanan" value="-">
+             <input type="hidden" name="cancel" value="-">
+          <button type="submit" onclick="return confirm('apakah sudah selesai?')" class="badge m-1 btn-success float-end px-3">Selesai</button>
           </form>
             @endif
-           
-         
-          
+            @endif
+            </div>
+          {{-- Akhir Opsi --}}
+          @else
+          <p  style="color: rgb(12, 181, 0); font-weight: bold" class="text-center align-items-center">Selesai</p>
+          @endif
         </td>
-      </tr>
-      
+      </tr>     
       @endforeach
+      @if ($i == 1)
+      <tr>
+        <td colspan="10" class="text-center">Tidak Ada Transaksi</td>
+      </tr>
+      @endif
+ 
       </tbody>
     </table>
     
@@ -128,13 +160,6 @@
 </div>
   </div>
 </div>
-
-
-
-
-
-
-
 
 
 @endsection

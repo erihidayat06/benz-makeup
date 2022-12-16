@@ -32,7 +32,7 @@ class LoginController extends Controller
             return redirect()->intended('/');
         }
 
-        return back()->with('loginError', 'Login Falid');
+        return back()->with('warning','Email Atau Password Salah');
 
     }
 

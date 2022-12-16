@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Category;
+use App\Models\Komentar;
 use App\Models\Pilihan;
 use App\Models\Transaksi;
 
@@ -21,13 +22,13 @@ class HomePilihanController extends Controller
 
 
         return view('pilihan',[
-        'pilihan' => Pilihan::latest()->filter(request(['category','cari']))
+        'pilihan' => Pilihan::with(['komentar'])->latest()->filter(request(['category','cari']))
         ->paginate(18)->withQueryString(),
         'notif'=> Transaksi::latest()->transaksi()->get(),
         'category' => $category,
         'judul' => $judul,
         'categories' => Category::latest()->get(),
-        'kategori' => Category::latest()->get()
+        'kategori' => Category::latest()->get(),
         ]);
     }
 
@@ -35,9 +36,10 @@ class HomePilihanController extends Controller
     {
         
         return view('pilih',[
+            'detail' => '',
             'pilih' => $pilihan,
             'notif'=> Transaksi::latest()->transaksi()->get(),
-            'categories' => Category::all()
+            'categories' => Category::all(),
         ]);
     }
     

@@ -15,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $judul = 'Category';
         return view('dashboard.categories.index',[
+            'judul' => $judul,
             'categories' => Category::all()
         ]);
     }

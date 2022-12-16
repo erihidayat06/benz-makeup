@@ -1,17 +1,12 @@
 @extends('dashboard.layout.main')
 
 @section('container')
+<h1>Halaman {{ $judul }}</h1>
 
 
+@include('sweetalert::alert')
 
-<div class="container">
-  <h1>Halaman {{ $judul }}</h1>
-</div>
-
-
-
-<div class="container mt-3">
-    {{-- input Pencarian --}}
+{{-- input Pencarian --}}
     <form action="/dashboard/pilihan">
     @csrf
     <div class="input-group mb-3">
@@ -23,29 +18,39 @@
     </div>
     </form>
 
-  <a href="/dashboard/pilihan/create" class="btn btn-primary" role="button">Tambahkan Pilihan</a>
-</div>
+    <div class="row row-cols-2">
+    <div class="col col-lg-2">
+       <a href="/dashboard/pilihan/create" class="btn btn-sm btn-primary" role="button">Tambah Pilihan</a>
+    </div>
+   <div class="col col-lg-3">
+    <div class="dropdown">
+    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      @if (request('category'))
+          {{ $category }}
+      @else
+          Category
+      @endif
+      
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark">
+      <li><a class="dropdown-item" href="/dashboard/pilihan">All</a></li>
+      @foreach ($categories as $category)
+        <li><a class="dropdown-item" href="/dashboard/pilihan?category={{ $category->slug }}">{{ $category->nama }}</a></li>
+      @endforeach
+    </ul>
+    </div>
+   </div>
+    </div>
+    
 
-@include('sweetalert::alert')
-
-<div class="container mt-3">
-  <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    {{ $judul }}
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark">
-    <li><a class="dropdown-item" href="/dashboard/pilihan">All</a></li>
-    @foreach ($categories as $category)
-      <li><a class="dropdown-item" href="/dashboard/pilihan?category={{ $category->slug }}">{{ $category->nama }}</a></li>
-    @endforeach
-  </ul>
-  </div>
-</div>
 
 
+<div class="mt-3 pagination-sm">{{ $pilihans->links() }}</div>
 
-<div class="mt-3" style="margin-left: 50%">{{ $pilihans->links() }}</div>
-<div class="table-responsive col-lg-10 mt-3">
+<div class="table-responsive col-lg-10">
+  <div class="mb-3 col text-end">
+showing {{$pilihans->firstItem()}} to {{$pilihans->lastItem()}} of {{$pilihans->total()}}
+</div> 
   <table class="table table-striped text-start table-bordered table-sm">
     <thead>  
       <tr>
@@ -83,7 +88,6 @@
     </table>
 </div>
 </div>
-
       
 
 @endsection

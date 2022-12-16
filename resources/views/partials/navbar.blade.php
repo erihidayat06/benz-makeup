@@ -15,7 +15,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li class="border-bottom"><a class="dropdown-item" href="/pilihan">All</a></li>
             @foreach($categories as $category)
-            <li><a class="dropdown-item" href="/pilihan?category={{ $category->slug }}">{{ $category->nama }}</a></li>
+            <li><a class="dropdown-category dropdown-item" href="/pilihan?category={{ $category->slug }}">{{ $category->nama }}</a></li>
             @endforeach
             </li>
           </ul>
@@ -36,20 +36,16 @@
             </i>
           </a>
           <ul class="dropdown-menu">
-            <?php $i=0 ?>
-              @foreach ($notif as $not)
-                <?php $i++ ?>
-              @endforeach
             <li>
               <a class="dropdown-item position-relative" href="/pesanan">
               <i class="bi bi-cart2"></i>
                 Pesanan 
-              @if ($i<=0)
+              @if ($notif<=0)
                  <span class=""> 
                 <span class="visually-hidden">unread messages</span></span></a></li>
               @else
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> 
-                {{ $i }}
+                {{ $notif }}
                 <span class="visually-hidden">unread messages</span></span></a></li>
               @endif
               

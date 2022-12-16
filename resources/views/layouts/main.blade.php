@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    @if (request('category'))
+    <title>Category {{ $judul }}</title>
+    @elseif(isset($pilihan) && !request('category'))
+    <title>Category All</title>
+    @elseif(isset($detail))
+    <title>{{ $pilih->jns_makeup }}</title>
+    @elseif(isset($pesanan))
+    <title>Pesanan {{ auth()->user()->name }}</title>
+    @else
     <title>Benz Makeup</title>
+    @endif
+    
 
     {{-- Icon Boostrap --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
@@ -16,10 +28,16 @@
     <link rel="stylesheet" href="/css/style.css">
 
     <!-- Logo title -->
-    <link rel="icon" type="img/png" href="https://s3-alpha-sig.figma.com/img/3865/9eea/6d33d9ec618995c486b796d4668fd8a5?Expires=1669593600&Signature=G0FcSzGMg9c6LEyVqKCpt44ngcxBCUqj66UKe~82tCvVp-e3h8gPcfHIgdQeLZjN9c7yo0wVjVu9qiLuqW1j2UMXvKyNZde10kKdWZQRnWs58L8Ace-NTuhm~fRdbbljSpBBsfqM4lqFnYzDQwdUQiFO3tIisCKhqYXehYKPOcEBLKyQ430-eAYSMThULppa421IsvofRo0gmTehL3XVC2opU-X8QKU1bTxSY11lyWla2ExvGki5tudwseqyC6iQJZFzbSM3TgXVkz9mvhi7NySrTExUUBHczhYRW7R3pxldOG7Lske51mRH3EyxhakiPY3dkPiAYXUPy9ms2IbHsQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA">
+    <link rel="icon" type="img/png" href="img/title.png">
 
 </head>
-<body style="background-color: #ededed;">
+<body style="background-color: var(--body-color);">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
 
 @include('partials.navbar')
 
@@ -29,7 +47,19 @@
 @include('partials.footer')
 
 </body>
-    {{-- JS Boostrap --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+    <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js" integrity="sha512-jNDtFf7qgU0eH/+Z42FG4fw3w7DM/9zbgNPe3wfJlCylVDTT3IgKW5r92Vy9IHa6U50vyMz5gRByIu4YIXFtaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('img').lazyload();
+        })
+    </script>
 </html>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PHPUnit\Framework\MockObject\Stub\ReturnStub;
 
 class TransaksiController extends Controller
 {
@@ -14,6 +16,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
+        
         $active = '';
         $judul = 'Transaksi';
         if(request('cancel') == 1){
@@ -29,12 +32,16 @@ class TransaksiController extends Controller
             $judul = 'ACC Tunggu';
             $active = 'tunggu';
         }
+        if(request('selesai') == 1){
+            $judul = 'Selesai';
+            $active = 'selesai';
+        }
 
         $this->authorize('admin');
         return view('dashboard.transaksi.index',[
             'judul' => 'Tabel ' . $judul,
             'active' => $active,
-            'transaksis' => Transaksi::latest()->filter(request(['cancel','acc_pesanan','cari']))->paginate(5)->withQueryString()
+            'transaksis' => Transaksi::with(['pilihan','user'])->latest()->filter(request(['cancel','acc_pesanan','cari','selesai']))->paginate(5)->withQueryString()
         ]);
     }
 
@@ -45,38 +52,27 @@ class TransaksiController extends Controller
      */
     public function create(Request $request)
     {
-       if($request->no_telp == null || $request->alamat == null || $request->tgl_acara == null){
-            
-            return back()->with('info', 'Data Belum Di Isi Semua');
-        }
-
+        $this->authorize('admin');
         $validateData = $request->validate([
             "pilihan_id" => "required",
             "tgl_acara" => "required|date",
-            "no_telp" => "required|max:255",
+            "no_telp" => "required|min:7|max:255",
             "alamat" => "required|max:255",
             "no_pesanan" => "unique:transaksis",
         ]);
-         
 
         $validateData['user_id'] = auth()->user()->id;
-        $validateData['no_pesanan'] = substr(auth()->user()->name, 0, 2) . rand(0,9999) . substr(md5(time()), 0, 4) . substr($request->no_telp, -4);
-
-
+        $validateData['no_pesanan'] = strtoupper(substr(auth()->user()->name, 0, 2) . rand(0,9999) . substr(md5(time()), 0, 4) . substr($request->no_telp, -4));
         
-
+        
+            
         if(Transaksi::create($validateData)){
-
-                $uniq_user = auth()->user()->uniq;
-
-                return redirect("/pesanan?uniq_user=$uniq_user")->with('success', 'Data Pesanan Berhasil Di tambahkan');
+            return redirect("/pesanan")->with('success', 'Data Pesanan Berhasil Di tambahkan');
         }
 
+            
 
-
- 
         
-
     }
 
     /**
@@ -98,7 +94,10 @@ class TransaksiController extends Controller
      */
     public function show(Transaksi $transaksi)
     {
-        //
+        $data = PDF::loadView('pesanan.print',
+        ['transaksi'=>$transaksi]);
+        return $data->stream('pesanan.print');
+
     }
 
     /**
@@ -121,30 +120,31 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, Transaksi $transaksi)
     {
-
-        $rules = $request->validate([
-            'acc_pesanan' => 'required',
-            'cancel' => 'required'
-        ]);
-
  
+        $this->authorize('admin');
         if(request('acc_pesanan') == 0){
             $rules['acc_pesanan'] = 1;
-            $rules['cancel'] = $transaksi->cancel;
         }
         if(request('acc_pesanan') == 1){
             $rules['acc_pesanan'] = 0;
-            $rules['cancel'] = $transaksi->cancel;
         }
 
         if(request('cancel') == 1){
             $rules['cancel'] = 0;
-            $rules['acc_pesanan'] = $transaksi->acc_pesanan;
         }
+
         if(request('cancel') == 0){
             $rules['cancel'] = 1;
-            $rules['acc_pesanan'] = $transaksi->acc_pesanan;
         }
+
+        if(request('selesai') == 0){
+            $rules['selesai'] = 1;
+        }
+
+        if(request('selesai') == 1){
+            $rules['selesai'] = 0;
+        }
+
         
 
         Transaksi::where('id',$transaksi->id)
@@ -161,6 +161,8 @@ class TransaksiController extends Controller
      */
     public function destroy(Transaksi $transaksi)
     {
-        //
+        $this->authorize('admin');
+        Transaksi::destroy($transaksi->id);
+        return redirect('/pesanan')->with('success', 'Pesanan Telah Di Batalkan');
     }
 }

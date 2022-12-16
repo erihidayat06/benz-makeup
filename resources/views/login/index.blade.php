@@ -11,7 +11,7 @@
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
         <div class="form-floating mt-3" >
-        <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email"  placeholder="name@example.com">
+        <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email"  placeholder="name@example.com" autofocus>
         <label for="email">Email address</label>
         @error('email')
         <div class="invalid-feedback">

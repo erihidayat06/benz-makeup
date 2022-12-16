@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Komentar;
 use App\Models\Transaksi;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -46,8 +47,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // relasi
+
     public function transaksi()
     {
         return $this->hasMany(Transaksi::class);
+    }
+
+    public function komentar()
+    {
+        return $this->hasMany(Komentar::class);
     }
 }

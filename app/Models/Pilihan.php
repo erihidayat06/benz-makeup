@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Category;
+use App\Models\Komentar;
 use App\Models\Transaksi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +15,7 @@ class Pilihan extends Model
     protected $guarded = ['id'];
     protected $with = ['category','transaksi'];
 
+    // scope
     public function scopeFilter($query, array $filters)
     {
         // $query->when($filters['category'] ?? false , function($query, $category){
@@ -39,6 +41,8 @@ class Pilihan extends Model
         return 'slug';
     }
 
+    // relasi
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -47,6 +51,11 @@ class Pilihan extends Model
     public function transaksi()
     {
         return $this->hasMany(Transaksi::class);
+    }
+
+    public function komentar()
+    {
+        return $this->hasMany(Komentar::class);
     }
     
 }

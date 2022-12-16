@@ -43,5 +43,5 @@
 
 {{-- copy --}}
 <div class="copy">
-&copy; 2022 Benz Makeup All rights reserved
+<footer>&copy; 2022 Benz Makeup All rights reserved</footer>
 </div>

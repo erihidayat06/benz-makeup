@@ -16,14 +16,16 @@ class PilihanController extends Controller
      */
     public function index()
     {
-         $judul = 'Category';
+         $judul = 'Pilihan';
+         $category = "Category";
         if(request('category')){
-            $judul = "Category " . request('category');
+            $category = "Category " . request('category');
         }
         $this->authorize('admin');
         return view('dashboard.pilihan.index',[
             'pilihans' => Pilihan::latest()->filter(request(['category','cari']))->paginate(10)->withQueryString(),
             'judul' => $judul,
+            'category' => $category,
             'categories' => Category::all()
         ]);
     }
@@ -109,6 +111,7 @@ class PilihanController extends Controller
      */
     public function update(Request $request, Pilihan $pilihan)
     {
+        $this->authorize('admin');
          $rules = [
             'jns_makeup' =>'required|max:255',
             'category_id' => 'required',
@@ -147,6 +150,7 @@ class PilihanController extends Controller
      */
     public function destroy(Pilihan $pilihan)
     {
+        $this->authorize('admin');
         if($pilihan->gambar){
             Storage::delete($pilihan->gambar);
         }

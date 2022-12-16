@@ -9,13 +9,28 @@ class AnalisController extends Controller
 {
     public function index()
     {
+
+            $bulan = [];
+            for ($i=1; $i <= 12 ; $i++) { 
+                $bulan[] = count(Transaksi::bulan([$i])->get());
+            }
+
+            $tahun = [['Contry', 'Mhl']];
+            $a = intval(date('Y'))-5;
+            for ($i=$a; $i <= intval(date('Y')) ; $i++) {      
+                    $tahun[] = ["$i" ,  count(Transaksi::tahun([$i])->get())];     
+            }
+
+            
         $this->authorize('admin');
         return view('dashboard.analis.index',[
             'allTransaksi' => Transaksi::all(),
             'cancel' => Transaksi::latest()->pesanancancel()->get(),
             'pesanan' => Transaksi::latest()->pesanan()->get(),
-            'transaksi' => Transaksi::latest()->cancel()->get()
-
+            'transaksi' => Transaksi::latest()->cancel()->get(),
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'judul' => 'Analis'
         ]);
     }
 }

@@ -1,10 +1,9 @@
 @extends('dashboard.layout.main')
 
 @section('container')
-<div class="container mt-3">
+<div class="mt-3">
   <a href="/dashboard/category/create" class="btn btn-primary" role="button">Tambahkan Categori</a>
 </div>
-
 
 @include('sweetalert::alert')
 
