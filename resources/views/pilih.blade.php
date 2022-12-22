@@ -4,7 +4,7 @@
 
 @include('sweetalert::alert')
 
-<div style="margin-top:65px" class="container">
+<div style="margin-top:35px" class="container">
 
 {{-- looping Komentar --}}
 <?php $nilai = 0; ?>

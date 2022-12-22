@@ -46,9 +46,8 @@
 
 @include('partials.footer')
 
-</body>
 
-    <script>
+ <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -62,4 +61,34 @@
             $('img').lazyload();
         })
     </script>
+
+    <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwVDWNXPu3Z7YrP0TvlKielGEuBhVXtRlOj-aAdrywnTqX4lN5f1byuLFnP-niwxivdzw/exec'
+    const form = document.forms['pesan-benz-makeup']
+    const btnKirim = document.querySelector('.btn-kirim')
+    const btnLoading = document.querySelector('.btn-loading')
+    const myAlert = document.querySelector('.my-alert')
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+
+        btnLoading.classList.toggle('d-none')
+        btnKirim.classList.toggle('d-none')
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+
+            // btn kirim
+            btnLoading.classList.toggle('d-none')
+            btnKirim.classList.toggle('d-none')
+            // tampilkan alet
+            myAlert.classList.toggle('d-none')
+            // reset form
+            form.reset()
+            console.log('Success!', response)})
+        .catch(error => console.error('Error!', error.message))
+    })
+    </script>
+</body>
+
+   
 </html>

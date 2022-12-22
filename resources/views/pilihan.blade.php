@@ -2,7 +2,7 @@
 
 @section('container')
 
-<div style="margin-bottom: 300px; margin-top:70px" class="container">
+<div style="margin-bottom: 300px; margin-top:30px" class="container">
 
 @if (request('category'))
     <h3 class="mt-3 fw-bold">CATEGORY {{ $category->nama }}</h3>

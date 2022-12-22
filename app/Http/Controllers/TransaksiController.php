@@ -52,7 +52,6 @@ class TransaksiController extends Controller
      */
     public function create(Request $request)
     {
-        $this->authorize('admin');
         $validateData = $request->validate([
             "pilihan_id" => "required",
             "tgl_acara" => "required|date",
@@ -150,7 +149,7 @@ class TransaksiController extends Controller
         Transaksi::where('id',$transaksi->id)
                     ->update($rules);
 
-        return redirect('/dashboard/transaksi?cancel=false');
+        return back();
     }
 
     /**

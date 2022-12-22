@@ -12,7 +12,6 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\HomePilihanController;
 use App\Http\Controllers\KomentarController;
-use App\Models\Komentar;
 
 /*
 |--------------------------------------------------------------------------

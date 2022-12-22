@@ -6,7 +6,7 @@
 
 
 
-<div style="margin-top:70px; margin-bottom:300px;" class="container">
+<div style="margin-top:20px; margin-bottom:300px;" class="container">
   <legend>Table Pesanan - {{ auth()->user()->name }}</legend>
 <p class="alert alert-primary">Jika Status <span class="text-danger fw-bold"> Tunggu </span>Segera Lakukan Pemabayaran Dengan Mengklik Tombol <span class="fw-bold">Bayar</span> </p>
 

@@ -3,7 +3,7 @@
 @section('container')
 
 {{-- jumbotron --}}
-<div style="margin-top:50px;" class="jumbotron">
+<div style="margin-top:15px;" class="jumbotron">
   <div class="img ">
     <img class="justify-content-center" style="margin-top: 100px" width="250px" src="/img/logo.png" alt="">
   </div>
